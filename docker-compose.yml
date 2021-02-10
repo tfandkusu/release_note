@@ -1,0 +1,6 @@
+release_note:
+  build: .
+  environment:
+    - GITHUB_API_ACCESS_TOKEN
+    - GITHUB_REPOSITORY
+    - GITHUB_ORGANIZATION
