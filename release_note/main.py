@@ -8,7 +8,8 @@ def get_version_and_tag_name():
     major = 1
     minor = 0
     patch = 0
-    with open("build.gradle") as f:
+    src_dir = os.environ['CODEBUILD_SRC_DIR']
+    with open("%s/build.gradle" % src_dir) as f:
         for line in f.readlines():
             if(line.startswith("    ext.major = ")):
                 major = int(line.split()[-1])
@@ -23,7 +24,7 @@ def get_version_and_tag_name():
 
 def main():
     # バージョン名とタグ名を作る
-    # version_name, tag_name = get_version_and_tag_name()
+    version_name, tag_name = get_version_and_tag_name()
     # アクセストークンを持ってGithubオブジェクトを作成
     access_token = os.environ['GITHUB_API_ACCESS_TOKEN']
     repository_name = os.environ['GITHUB_REPOSITORY']
@@ -41,7 +42,7 @@ def main():
     # masterブランチにマージ済みプルリク一覧テキストを作成する
     text = r.make_marged_prs()
     # デバッグ表示する
-    # print("%s %s" % (version_name, tag_name))
+    print("%s %s" % (version_name, tag_name))
     print("")
     print(text)
     # git releaseを作成する
